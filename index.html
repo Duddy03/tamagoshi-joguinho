@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tamagotchi Cachorrinho</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background:url(src/WhatsApp\ Image\ 2025-03-29\ at\ 15.14.57.jpeg) no-repeat center center;
+      background-size: cover;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .game {
+      background: rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .dog {
+      width: 100px;
+      transition: transform 0.3s;
+    }
+
+    .animate {
+      animation: bounce 0.5s;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+      100% { transform: translateY(0); }
+    }
+
+    .bars {
+      margin-top: 10px;
+    }
+
+    .bar {
+      width: 200px;
+      height: 20px;
+      background: #ddd;
+      border-radius: 10px;
+      margin: 5px auto;
+      overflow: hidden;
+    }
+
+    .fill {
+      height: 100%;
+      background: #4caf50;
+      transition: width 0.3s;
+    }
+
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background-color: pink;
+      cursor: pointer;
+    }
+
+    .dead {
+      color: red;
+      font-size: 24px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="game">
+    <img id="dog" src="https://cdn-icons-png.flaticon.com/512/616/616408.png" class="dog" alt="dog">
+
+    <div class="bars">
+      <div>Vida</div>
+      <div class="bar"><div id="life" class="fill" style="width: 100%"></div></div>
+      <div>Fome</div>
+      <div class="bar"><div id="hunger" class="fill" style="width: 100%"></div></div>
+      <div>Diversão</div>
+      <div class="bar"><div id="fun" class="fill" style="width: 100%"></div></div>
+    </div>
+
+    <button onclick="feed()">Alimentar</button>
+    <button onclick="play()">Brincar</button>
+
+    <div id="status" class="dead"></div>
+  </div>
+
+  <script>
+    let life = 100;
+    let hunger = 100;
+    let fun = 100;
+
+    const dogImg = document.getElementById('dog');
+
+    function updateBars() {
+      document.getElementById('life').style.width = life + '%';
+      document.getElementById('hunger').style.width = hunger + '%';
+      document.getElementById('fun').style.width = fun + '%';
+
+      if (hunger <= 0 || fun <= 0) {
+        life -= 1;
+      }
+
+      if (life <= 0) {
+        document.getElementById('status').innerText = 'O cachorrinho morreu!';
+        dogImg.src = 'https://cdn-icons-png.flaticon.com/512/616/616430.png';
+        clearInterval(gameLoop);
+      } else {
+        updateDogMood();
+      }
+    }
+
+    function updateDogMood() {
+      if (life < 30) {
+        dogImg.src = 'https://cdn-icons-png.flaticon.com/512/616/616428.png';
+      } else if (hunger < 30 || fun < 30) {
+        dogImg.src = 'https://cdn-icons-png.flaticon.com/512/616/616431.png';
+      } else {
+        dogImg.src = 'https://cdn-icons-png.flaticon.com/512/616/616408.png';
+      }
+    }
+
+    function animateDog() {
+      dogImg.classList.add('animate');
+      setTimeout(() => {
+        dogImg.classList.remove('animate');
+      }, 500);
+    }
+
+    function feed() {
+      hunger = Math.min(hunger + 20, 100);
+      updateBars();
+      animateDog();
+    }
+
+    function play() {
+      fun = Math.min(fun + 20, 100);
+      updateBars();
+      animateDog();
+    }
+
+    const gameLoop = setInterval(() => {
+      hunger = Math.max(hunger - 2, 0);
+      fun = Math.max(fun - 2, 0);
+      updateBars();
+    }, 1000);
+
+    updateBars();
+  </script>
+</body>
+</html>
