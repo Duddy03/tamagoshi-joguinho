@@ -5,18 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tamagotchi Cachorrinho</title>
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      background:url(src/WhatsApp\ Image\ 2025-03-29\ at\ 15.14.57.jpeg) no-repeat center center;
-      background-size: cover;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+   body {
+  margin: 0;
+  padding: 0;
+  background: url("src/WhatsApp Image 2025-03-29 at 15.14.57.jpeg") no-repeat center center;
+  background-size: contain; /* Troca 'cover' por 'contain' */
+  background-attachment: fixed; /* Faz a imagem ficar fixa */
+  font-family: Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
 
     .game {
       background: rgba(255, 255, 255, 0.8);
